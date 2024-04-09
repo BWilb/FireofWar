@@ -65,11 +65,11 @@ class OpeningMenu:
         """time button images"""
         img_1950 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1950_button.jpg").convert_alpha()
         img_1953 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1953_button.jpg").convert_alpha()
-        img_1960 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1953_button.jpg").convert_alpha()
-        img_1963 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1953_button.jpg").convert_alpha()
-        img_1969 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1953_button.jpg").convert_alpha()
-        img_1980 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1953_button.jpg").convert_alpha()
-        img_1989 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1953_button.jpg").convert_alpha()
+        img_1960 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1960_button.jpg").convert_alpha()
+        img_1963 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1963_button.jpg").convert_alpha()
+        img_1969 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1969_button.jpg").convert_alpha()
+        img_1980 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1980_button.jpg").convert_alpha()
+        img_1989 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1989_button.jpg").convert_alpha()
         """time buttons"""
         button_1950 = button.Button(self.WIDTH * 0.20, 300, img_1950, 0.25)
         button_1953 = button.Button(self.WIDTH * 0.20, 500, img_1953, 0.25)
@@ -77,24 +77,27 @@ class OpeningMenu:
         button_1963 = button.Button(self.WIDTH * 0.65, 300, img_1963, 0.25)
         button_1969 = button.Button(self.WIDTH * 0.65, 500, img_1969, 0.25)
         button_1980 = button.Button(self.WIDTH * 0.65, 700, img_1980, 0.25)
-        button_1989 = button.Button(self.WIDTH * 0.65, 700, img_1989, 0.25)
+        button_1989 = button.Button(self.WIDTH * 0.425, 500, img_1989, 0.25)
         self.draw_text("Choose your timeframe!", self.font, self.text_col, self.WIDTH * 0.375, 100)
-        if button_1910.draw(self.screen):
+        if button_1950.draw(self.screen):
             self.time_chosen = "1910"
             self.menu_state = "region"
-        if button_1914.draw(self.screen):
+        if button_1953.draw(self.screen):
             self.time_chosen = "1914"
             self.menu_state = "region"
-        if button_1918.draw(self.screen):
+        if button_1960.draw(self.screen):
             self.time_chosen = "1918"
             self.menu_state = "region"
-        if button_1932.draw(self.screen):
+        if button_1963.draw(self.screen):
             self.time_chosen = "1932"
             self.menu_state = "region"
-        if button_1936.draw(self.screen):
+        if button_1969.draw(self.screen):
             self.time_chosen = "1936"
             self.menu_state = "region"
-        if button_1939.draw(self.screen):
+        if button_1980.draw(self.screen):
+            self.time_chosen = "1939"
+            self.menu_state = "region"
+        if button_1989.draw(self.screen):
             self.time_chosen = "1939"
             self.menu_state = "region"
         """if back_button.draw(self.screen):
@@ -102,21 +105,26 @@ class OpeningMenu:
 
     def region_menu(self):
         # function directs user to specific region that they select
-        """
-        img_asia = pygame.image.load("buttons/region/asia/asia_button.jpg").convert_alpha()
-        img_africa = pygame.image.load("buttons/region/africa/africa_button.jpg").convert_alpha()
-        img_na = pygame.image.load("buttons/region/n_a/na_button.jpg").convert_alpha()
-        img_sa = pygame.image.load("buttons/region/s_a/sa_button.jpg").convert_alpha()
-        img_europe = pygame.image.load("buttons/region/europe/europe_button.jpg").convert_alpha()
-        """
-        """
+
+        img_asia = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/region_buttons/asia/asia_button.jpg").convert_alpha()
+        #img_africa = pygame.image.load("buttons/region/africa/africa_button.jpg").convert_alpha()
+        img_na = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/region_buttons/n_a/na_button.jpg").convert_alpha()
+        img_sa = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/region_buttons/s_a/sa_button.jpg").convert_alpha()
+        img_europe = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/region_buttons/europe/europe_button.jpg").convert_alpha()
+
         europe_button = button.Button(self.WIDTH * 0.20, 250, img_europe, 0.25)
         asia_button = button.Button(self.WIDTH * 0.20, 450, img_asia, 0.25)
         na_button = button.Button(self.WIDTH * 0.65, 250, img_na, 0.25)
         sa_button = button.Button(self.WIDTH * 0.65, 450, img_sa, 0.25)
-        africa_button = button.Button(self.WIDTH * 0.425, 650, img_africa, 0.25)
-        """
-        if
+        #africa_button = button.Button(self.WIDTH * 0.425, 650, img_africa, 0.25)
+        if asia_button.draw(self.screen):
+            self.menu_state = "asia"
+        if na_button.draw(self.screen):
+            self.menu_state = "na"
+        if sa_button.draw(self.screen):
+            self.menu_state = "sa"
+        if europe_button.draw(self.screen):
+            self.menu_state = "europe"
 
     def main_menu(self):
         """main menu that controls user process of navigating opening menu"""
@@ -130,6 +138,12 @@ class OpeningMenu:
                 # self.background_music()
                 if self.menu_state == "main":
                     self.primary_menu()
+
+                elif self.menu_state == "time":
+                    self.time_menu()
+
+                elif self.menu_state == "region":
+                    self.region_menu()
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
