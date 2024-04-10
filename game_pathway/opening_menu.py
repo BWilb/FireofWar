@@ -5,19 +5,32 @@ import sys
 
 pygame.init()
 
+HEIGHT = pyautogui.size().height * 0.9
+WIDTH = pyautogui.size().width
+# initial width and height will be 90% size of computer screen
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 # initialization of pygame screen done outside of class
+# define fonts
+font = pygame.font.SysFont("Arial-Black", 40)
+class Button:
+    def __init__(self, text, width, height, pos):
+        """Button takes in parameters in relation to position of last button"""
+        self.top_rect = pygame.Rect(pos, (width, height))
+        self.top_color = "#475577"
+
+        self.text_surface = font.render(text, True, "#FFFFFF")
+        self.text_rect = self.text_surface.get_rect(center=self.top_rect)
+
+    def draw(self):
+        pygame.draw_rect(screen, self.top_color, self.top_rect)
+        screen.blit(self.text_surface,self.text_rect)
+
 class OpeningMenu:
     def __init__(self):
-        self.HEIGHT = pyautogui.size().height * 0.9
-        self.WIDTH = pyautogui.size().width
-        # initial width and height will be 90% size of computer screen
-        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.flare_background = \
             pygame.transform.scale(pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/background.jpg").convert_alpha(),
-                                   (self.WIDTH, self.HEIGHT))
-        # define fonts
-        self.font = pygame.font.SysFont("Arial-Black", 40)
+                                   (WIDTH, HEIGHT))
         # define colour
         self.text_col = (0, 0, 0)
         pygame.display.set_caption("Main Menu")
@@ -26,17 +39,21 @@ class OpeningMenu:
         """constraint on while loop that will control primary function of class"""
         self.menu_state = "main"
         # menu state controls which piece of the menu you are looking at
+        self.region_chosen = ""
         self.time_chosen = ""
         self.nation_chosen = ""
         """region chosen variable will aid in primary while loop function
         time and nation chosen variables will aid in kickstarting game
         """
 
+    def draw_buttons(self):
+        pass
+
     def draw_text(self, text, font, text_col, x, y):
         """function of opening menu class draws text"""
         # draws the text on screen
         img = font.render(text, True, text_col)
-        self.screen.blit(img, (x, y))
+        screen.blit(img, (x, y))
 
     def update_menu(self):
         """updates screen"""
@@ -47,17 +64,17 @@ class OpeningMenu:
         start_img = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/start_button.jpg").convert_alpha()
         options_img = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/options_butt.jpg").convert_alpha()
         quit_img = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/quit_butt.jpg").convert_alpha()
-        start_button = button.Button(self.WIDTH * 0.48, self.HEIGHT * 0.25, start_img, 0.25)
-        options_button = button.Button(self.WIDTH * 0.48, self.HEIGHT * 0.5, options_img, 0.25)
-        quit_button = button.Button(self.WIDTH * 0.48, self.HEIGHT * 0.75, quit_img, 0.25)
+        start_button = button.Button(WIDTH * 0.48, HEIGHT * 0.25, start_img, 0.25)
+        options_button = button.Button(WIDTH * 0.48, HEIGHT * 0.5, options_img, 0.25)
+        quit_button = button.Button(WIDTH * 0.48, HEIGHT * 0.75, quit_img, 0.25)
         """Primary images and buttons for main menu of game"""
-        self.draw_text("Welcome to Fire and War", self.font, self.text_col,
-                       (self.WIDTH * 0.425) - len("Fire and War"), 100)
-        if start_button.draw(self.screen):
+        self.draw_text("Welcome to Fire and War", font, self.text_col,
+                       (WIDTH * 0.425) - len("Fire and War"), 100)
+        if start_button.draw(screen):
             self.menu_state = "time"
-        elif options_button.draw(self.screen):
+        elif options_button.draw(screen):
             self.menu_state = "options"
-        elif quit_button.draw(self.screen):
+        elif quit_button.draw(screen):
             pygame.quit()
 
     def time_menu(self):
@@ -71,33 +88,33 @@ class OpeningMenu:
         img_1980 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1980_button.jpg").convert_alpha()
         img_1989 = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/time_buttons/1989_button.jpg").convert_alpha()
         """time buttons"""
-        button_1950 = button.Button(self.WIDTH * 0.20, 300, img_1950, 0.25)
-        button_1953 = button.Button(self.WIDTH * 0.20, 500, img_1953, 0.25)
-        button_1960 = button.Button(self.WIDTH * 0.20, 700, img_1960, 0.25)
-        button_1963 = button.Button(self.WIDTH * 0.65, 300, img_1963, 0.25)
-        button_1969 = button.Button(self.WIDTH * 0.65, 500, img_1969, 0.25)
-        button_1980 = button.Button(self.WIDTH * 0.65, 700, img_1980, 0.25)
-        button_1989 = button.Button(self.WIDTH * 0.425, 500, img_1989, 0.25)
-        self.draw_text("Choose your timeframe!", self.font, self.text_col, self.WIDTH * 0.375, 100)
-        if button_1950.draw(self.screen):
+        button_1950 = button.Button(WIDTH * 0.20, 300, img_1950, 0.25)
+        button_1953 = button.Button(WIDTH * 0.20, 500, img_1953, 0.25)
+        button_1960 = button.Button(WIDTH * 0.20, 700, img_1960, 0.25)
+        button_1963 = button.Button(WIDTH * 0.65, 300, img_1963, 0.25)
+        button_1969 = button.Button(WIDTH * 0.65, 500, img_1969, 0.25)
+        button_1980 = button.Button(WIDTH * 0.65, 700, img_1980, 0.25)
+        button_1989 = button.Button(WIDTH * 0.425, 500, img_1989, 0.25)
+        self.draw_text("Choose your timeframe!", font, self.text_col, WIDTH * 0.375, 100)
+        if button_1950.draw(screen):
             self.time_chosen = "1910"
             self.menu_state = "region"
-        if button_1953.draw(self.screen):
+        if button_1953.draw(screen):
             self.time_chosen = "1914"
             self.menu_state = "region"
-        if button_1960.draw(self.screen):
+        if button_1960.draw(screen):
             self.time_chosen = "1918"
             self.menu_state = "region"
-        if button_1963.draw(self.screen):
+        if button_1963.draw(screen):
             self.time_chosen = "1932"
             self.menu_state = "region"
-        if button_1969.draw(self.screen):
+        if button_1969.draw(screen):
             self.time_chosen = "1936"
             self.menu_state = "region"
-        if button_1980.draw(self.screen):
+        if button_1980.draw(screen):
             self.time_chosen = "1939"
             self.menu_state = "region"
-        if button_1989.draw(self.screen):
+        if button_1989.draw(screen):
             self.time_chosen = "1939"
             self.menu_state = "region"
         """if back_button.draw(self.screen):
@@ -112,18 +129,18 @@ class OpeningMenu:
         img_sa = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/region_buttons/s_a/sa_button.jpg").convert_alpha()
         img_europe = pygame.image.load("C:/Users/wilbu/pythonProjects/FireofWar/ux/opening_menu_ux/region_buttons/europe/europe_button.jpg").convert_alpha()
 
-        europe_button = button.Button(self.WIDTH * 0.20, 250, img_europe, 0.25)
-        asia_button = button.Button(self.WIDTH * 0.20, 450, img_asia, 0.25)
-        na_button = button.Button(self.WIDTH * 0.65, 250, img_na, 0.25)
-        sa_button = button.Button(self.WIDTH * 0.65, 450, img_sa, 0.25)
+        europe_button = button.Button(WIDTH * 0.20, 250, img_europe, 0.25)
+        asia_button = button.Button(WIDTH * 0.20, 450, img_asia, 0.25)
+        na_button = button.Button(WIDTH * 0.65, 250, img_na, 0.25)
+        sa_button = button.Button(WIDTH * 0.65, 450, img_sa, 0.25)
         #africa_button = button.Button(self.WIDTH * 0.425, 650, img_africa, 0.25)
-        if asia_button.draw(self.screen):
+        if asia_button.draw(screen):
             self.menu_state = "asia"
-        if na_button.draw(self.screen):
+        if na_button.draw(screen):
             self.menu_state = "na"
-        if sa_button.draw(self.screen):
+        if sa_button.draw(screen):
             self.menu_state = "sa"
-        if europe_button.draw(self.screen):
+        if europe_button.draw(screen):
             self.menu_state = "europe"
 
     def main_menu(self):
@@ -132,8 +149,8 @@ class OpeningMenu:
         self.is_running = True
         while self.is_running:
             if not self.game_paused:
-                self.screen.fill((0, 0, 0))
-                self.screen.blit(self.flare_background, (0, 0))
+                screen.fill((0, 0, 0))
+                screen.blit(self.flare_background, (0, 0))
                 # sets background image
                 # self.background_music()
                 if self.menu_state == "main":
@@ -161,7 +178,6 @@ class OpeningMenu:
 
             self.update_menu()
         pygame.quit()
-
 
 menu = OpeningMenu()
 menu.main_menu()
