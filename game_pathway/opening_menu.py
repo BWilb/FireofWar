@@ -2,6 +2,33 @@ import pygame
 import pyautogui
 from ux import button
 import sys
+import os
+
+class Button:
+    def __init__(self, text, width, height, pos):
+        self.top_rect = pygame.Rect(pos, (width, height))
+        self.top_color = "#475F77"
+        self.pressed = False
+
+        self.text_surf = font.render(text, True, "#FFFFFF")
+        self.text_rect = self.text_surf.get_rect(center=self.top_rect.center)
+        self.nation = text
+
+    def draw(self):
+        pygame.draw.rect(screen, self.top_color, self.top_rect, border_radius=12)
+        screen.blit(self.text_surf, self.text_rect)
+        self.check_if_clicked()
+
+    def check_if_clicked(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if self.top_rect.collidepoint(mouse_pos):
+            if pygame.mouse.get_pressed()[0]:
+                self.pressed = True
+
+            else:
+                if self.pressed == True:
+                    print(self.nation)
+                    self.pressed = False
 
 pygame.init()
 
@@ -13,18 +40,6 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 # initialization of pygame screen done outside of class
 # define fonts
 font = pygame.font.SysFont("Arial-Black", 40)
-class Button:
-    def __init__(self, text, width, height, pos):
-        """Button takes in parameters in relation to position of last button"""
-        self.top_rect = pygame.Rect(pos, (width, height))
-        self.top_color = "#475577"
-
-        self.text_surface = font.render(text, True, "#FFFFFF")
-        self.text_rect = self.text_surface.get_rect(center=self.top_rect)
-
-    def draw(self):
-        pygame.draw_rect(screen, self.top_color, self.top_rect)
-        screen.blit(self.text_surface,self.text_rect)
 
 class OpeningMenu:
     def __init__(self):
@@ -45,9 +60,11 @@ class OpeningMenu:
         """region chosen variable will aid in primary while loop function
         time and nation chosen variables will aid in kickstarting game
         """
-
-    def draw_buttons(self):
-        pass
+        self.nation_list = []
+        # button list stores list of nation buttons for region selected by user
+        # makes code less complicated
+        self.x_coord = 50
+        self.y_coord = 50
 
     def draw_text(self, text, font, text_col, x, y):
         """function of opening menu class draws text"""
@@ -97,25 +114,25 @@ class OpeningMenu:
         button_1989 = button.Button(WIDTH * 0.425, 500, img_1989, 0.25)
         self.draw_text("Choose your timeframe!", font, self.text_col, WIDTH * 0.375, 100)
         if button_1950.draw(screen):
-            self.time_chosen = "1910"
+            self.time_chosen = "1950"
             self.menu_state = "region"
         if button_1953.draw(screen):
-            self.time_chosen = "1914"
+            self.time_chosen = "1953"
             self.menu_state = "region"
         if button_1960.draw(screen):
-            self.time_chosen = "1918"
+            self.time_chosen = "1960"
             self.menu_state = "region"
         if button_1963.draw(screen):
-            self.time_chosen = "1932"
+            self.time_chosen = "1963"
             self.menu_state = "region"
         if button_1969.draw(screen):
-            self.time_chosen = "1936"
+            self.time_chosen = "1969"
             self.menu_state = "region"
         if button_1980.draw(screen):
-            self.time_chosen = "1939"
+            self.time_chosen = "1980"
             self.menu_state = "region"
         if button_1989.draw(screen):
-            self.time_chosen = "1939"
+            self.time_chosen = "1989"
             self.menu_state = "region"
         """if back_button.draw(self.screen):
             self.menu_state = "main"""
@@ -134,14 +151,43 @@ class OpeningMenu:
         na_button = button.Button(WIDTH * 0.65, 250, img_na, 0.25)
         sa_button = button.Button(WIDTH * 0.65, 450, img_sa, 0.25)
         #africa_button = button.Button(self.WIDTH * 0.425, 650, img_africa, 0.25)
+        # function delving into different regions that the user might choose
         if asia_button.draw(screen):
             self.menu_state = "asia"
+            for nation in os.listdir("C:/Users/wilbu/pythonProjects/FireofWar/nation_data/regions/asia"):
+                self.nation_list.append(f"{nation[:-3]}")
+            self.menu_state = "select nation"
+
         if na_button.draw(screen):
             self.menu_state = "na"
+            for nation in os.listdir("C:/Users/wilbu/pythonProjects/FireofWar/nation_data/regions/na"):
+                self.nation_list.append(f"{nation[:-3]}")
+                self.menu_state = "select nation"
+
         if sa_button.draw(screen):
             self.menu_state = "sa"
+            for nation in os.listdir("C:/Users/wilbu/pythonProjects/FireofWar/nation_data/regions/sa"):
+                self.nation_list.append(f"{nation[:-3]}")
+                self.menu_state = "select nation"
+
         if europe_button.draw(screen):
             self.menu_state = "europe"
+            for nation in os.listdir("C:/Users/wilbu/pythonProjects/FireofWar/nation_data/regions/europe"):
+                self.nation_list.append(f"{nation[:-3]}")
+                self.menu_state = "select nation"
+
+    def select_nation(self):
+        # function handles drawing of nation buttons
+        self.x_coord = 200
+        self.y_coord = 50
+        for nation in self.nation_list:
+            if self.y_coord >= HEIGHT * 0.9:
+                self.x_coord += 50
+                self.y_coord = 50
+            nation_button = Button(nation, 300, 75, (self.x_coord, self.y_coord))
+            nation_button.draw()
+            self.y_coord += 100
+
 
     def main_menu(self):
         """main menu that controls user process of navigating opening menu"""
@@ -161,6 +207,9 @@ class OpeningMenu:
 
                 elif self.menu_state == "region":
                     self.region_menu()
+
+                elif self.menu_state == "select nation":
+                    self.select_nation()
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
