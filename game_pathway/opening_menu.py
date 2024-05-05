@@ -6,8 +6,10 @@ import os
 
 class Button:
     def __init__(self, text, width, height, pos):
+        # top rectangle
         self.top_rect = pygame.Rect(pos, (width, height))
         self.top_color = "#475F77"
+        # core attributes
         self.pressed = False
 
         self.text_surf = font.render(text, True, "#FFFFFF")
@@ -63,8 +65,7 @@ class OpeningMenu:
         self.nation_list = []
         # button list stores list of nation buttons for region selected by user
         # makes code less complicated
-        self.x_coord = 50
-        self.y_coord = 50
+        self.clock = pygame.time.Clock()
 
     def draw_text(self, text, font, text_col, x, y):
         """function of opening menu class draws text"""
@@ -179,15 +180,17 @@ class OpeningMenu:
     def select_nation(self):
         # function handles drawing of nation buttons
         self.x_coord = 200
+        # buttons begin drawing at (200, 50)
         self.y_coord = 50
         for nation in self.nation_list:
             if self.y_coord >= HEIGHT * 0.9:
-                self.x_coord += 50
+                self.x_coord += 600
+                # button x coord moved 600 pixels to the right
                 self.y_coord = 50
-            nation_button = Button(nation, 300, 75, (self.x_coord, self.y_coord))
+                # button y coord reset to 50
+            nation_button = button.AnimatedButton(screen, font, nation, 300, 75, (self.x_coord, self.y_coord))
             nation_button.draw()
             self.y_coord += 100
-
 
     def main_menu(self):
         """main menu that controls user process of navigating opening menu"""
@@ -226,6 +229,7 @@ class OpeningMenu:
                     sys.exit()
 
             self.update_menu()
+            self.clock.tick(60)
         pygame.quit()
 
 menu = OpeningMenu()
