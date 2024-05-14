@@ -74,8 +74,7 @@ def initial_upload_database(nations):
     NationPopulation int NOT NULL,
     NationalHappiness float NOT NULL,
     NationalStability float NOT NULL,
-    Births INT NOT NULL,
-    Deaths INT NOT NULL,
+    BirthRate float NOT NULL,
     NationGDP float NOT NULL,
     NationalDebt float NOT NULL
     )
